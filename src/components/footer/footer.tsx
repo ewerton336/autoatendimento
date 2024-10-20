@@ -22,7 +22,7 @@ const Footer: React.FC<FooterProps> = ({ totalAmount }) => {
       }}
     >
       <Grid container justifyContent="space-between" alignItems="center">
-        <Grid item xs={11} textAlign="left">
+        <Grid item xs={11} textAlign="left" alignItems="center">
           <Typography variant="h6" sx={{ marginLeft: "5px" }}>
             Valor Total: R${totalAmount}
           </Typography>
@@ -34,7 +34,7 @@ const Footer: React.FC<FooterProps> = ({ totalAmount }) => {
             startIcon={<ShoppingCartIcon />}
             sx={{ padding: "30px 20px" }}
           >
-            <Typography variant="h6" component="span">
+            <Typography sx={{ padding: "0px 30px" }} component="span">
               Finalizar
             </Typography>
           </Button>
