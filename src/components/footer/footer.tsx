@@ -1,6 +1,6 @@
 import React from "react";
-import { Row, Col, Button } from "antd";
-import { ShoppingCartOutlined } from "@ant-design/icons";
+import { Box, Grid, Button, Typography } from "@mui/material";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 interface FooterProps {
   totalAmount: number;
@@ -8,8 +8,8 @@ interface FooterProps {
 
 const Footer: React.FC<FooterProps> = ({ totalAmount }) => {
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         backgroundColor: "#722ed1",
         padding: "10px 10px",
         color: "#fff",
@@ -21,21 +21,26 @@ const Footer: React.FC<FooterProps> = ({ totalAmount }) => {
         zIndex: 1000,
       }}
     >
-      <Row justify="space-between" align="middle">
-        <Col style={{ textAlign: "left" }} span={11}>
-          <h1 style={{ marginLeft: "5px" }}>Valor Total: R${totalAmount}</h1>
-        </Col>
-        <Col style={{ textAlign: "right", marginRight: "50px" }} span={11}>
+      <Grid container justifyContent="space-between" alignItems="center">
+        <Grid item xs={11} textAlign="left">
+          <Typography variant="h6" sx={{ marginLeft: "5px" }}>
+            Valor Total: R${totalAmount}
+          </Typography>
+        </Grid>
+        <Grid item xs={11} textAlign="right" sx={{ marginRight: "50px" }}>
           <Button
-            type="primary"
-            icon={<ShoppingCartOutlined />}
-            style={{ padding: "30px 20px" }}
+            variant="contained"
+            color="primary"
+            startIcon={<ShoppingCartIcon />}
+            sx={{ padding: "30px 20px" }}
           >
-            <h1>Finalizar</h1>
+            <Typography variant="h6" component="span">
+              Finalizar
+            </Typography>
           </Button>
-        </Col>
-      </Row>
-    </div>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 

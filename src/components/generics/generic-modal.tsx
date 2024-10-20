@@ -1,26 +1,40 @@
 import React from "react";
-import { Button, Modal } from "antd";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Button,
+  DialogActions,
+} from "@mui/material";
 
 interface GenericModalProps {
-  visible: boolean;
+  open: boolean;
   onClose: () => void;
   children: React.ReactNode;
   title?: string;
 }
 
 const GenericModal: React.FC<GenericModalProps> = ({
-  visible,
+  open,
   onClose,
   children,
   title,
 }) => {
   return (
-    <Modal title={title} open={visible} onCancel={onClose} footer={null}>
-      {children}
-      <Button type="primary" onClick={onClose} style={{ marginTop: "20px" }}>
-        Fechar
-      </Button>
-    </Modal>
+    <Dialog open={open} onClose={onClose} fullWidth>
+      {title && <DialogTitle>{title}</DialogTitle>}
+      <DialogContent>{children}</DialogContent>
+      <DialogActions>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={onClose}
+          sx={{ marginTop: "20px" }}
+        >
+          Fechar
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

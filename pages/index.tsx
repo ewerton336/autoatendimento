@@ -1,19 +1,20 @@
 import React, { useState } from "react";
-// import dynamic from "next/dynamic";
+import dynamic from "next/dynamic";
+import { Box, Grid, Typography, Button } from "@mui/material";
 import GenericModal from "@/components/generics/generic-modal";
 import QuantidadeForm from "@/components/forms/quantidade/quantidade-form";
-import { Col, Row, Button } from "antd";
-import Header from "@/components/header/header";
-import Footer from "@/components/footer/footer";
-// const Header = dynamic(() => import("@/components/header/header"), {
-//   ssr: false,
-// });
-// const Footer = dynamic(() => import("@/components/footer/footer"), {
-//   ssr: false,
-// });
+
+// Dinamicamente importando Header e Footer com SSR desabilitado
+const Header = dynamic(() => import("@/components/header/header"), {
+  ssr: false,
+});
+const Footer = dynamic(() => import("@/components/footer/footer"), {
+  ssr: false,
+});
 
 const Home: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -23,24 +24,31 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div>
+    <Box>
       <Header />
-      <Row>
-        <Col span={12}>
-          <h1 style={{ textAlign: "right" }}> Teste</h1>
-        </Col>
-        <Col span={12}>
-          <h1 style={{ textAlign: "right" }}> Teste</h1>
-        </Col>
-      </Row>
-      <Button type="primary" onClick={showModal}>
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <Typography variant="h4" align="right">
+            Teste
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="h4" align="right">
+            Teste
+          </Typography>
+        </Grid>
+      </Grid>
+
+      <Button variant="contained" color="primary" onClick={showModal}>
         Abrir Modal
       </Button>
-      <GenericModal visible={isModalOpen} onClose={closeModal}>
+
+      <GenericModal open={isModalOpen} onClose={closeModal}>
         <QuantidadeForm />
       </GenericModal>
+
       <Footer totalAmount={10} />
-    </div>
+    </Box>
   );
 };
 
