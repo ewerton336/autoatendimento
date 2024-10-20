@@ -6,41 +6,37 @@ const QuantidadeForm: React.FC = () => {
 
   return (
     <Box>
-      <Grid container spacing={2}>
-        <Grid item>
-          <Button variant="contained" onClick={() => setQuantidade(1)}>
-            1
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button variant="contained" onClick={() => setQuantidade(2)}>
-            2
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button variant="contained" onClick={() => setQuantidade(3)}>
-            3
-          </Button>
-        </Grid>
-      </Grid>
-      <Grid container spacing={2} sx={{ marginTop: "10px" }}>
-        <Grid item>
-          <Button variant="contained" onClick={() => setQuantidade(6)}>
-            6
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button variant="contained" onClick={() => setQuantidade(12)}>
-            12
-          </Button>
-        </Grid>
+      <Grid
+        container
+        spacing={5}
+        sx={{
+          marginTop: "10px",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Grid item>
           <TextField
             type="number"
-            label="Outra quantidade"
+            label="Selecione a quantidade"
             value={quantidade}
             onChange={(e) => setQuantidade(Number(e.target.value))}
           />
+        </Grid>
+        <Grid item>
+          <Button
+            sx={{ marginRight: "10px" }}
+            variant="contained"
+            onClick={() => setQuantidade(quantidade + 1)}
+          >
+            +
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => setQuantidade(quantidade - 1)}
+          >
+            -
+          </Button>
         </Grid>
       </Grid>
     </Box>

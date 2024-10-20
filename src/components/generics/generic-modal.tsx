@@ -5,7 +5,9 @@ import {
   DialogContent,
   Button,
   DialogActions,
+  IconButton,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface GenericModalProps {
   open: boolean;
@@ -23,6 +25,18 @@ const GenericModal: React.FC<GenericModalProps> = ({
   return (
     <Dialog open={open} onClose={onClose} fullWidth>
       {title && <DialogTitle>{title}</DialogTitle>}
+      <IconButton
+        aria-label="close"
+        onClick={onClose}
+        sx={(theme) => ({
+          position: "absolute",
+          right: 8,
+          top: 8,
+          color: theme.palette.grey[500],
+        })}
+      >
+        <CloseIcon />
+      </IconButton>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
         <Button
@@ -31,7 +45,7 @@ const GenericModal: React.FC<GenericModalProps> = ({
           onClick={onClose}
           sx={{ marginTop: "20px" }}
         >
-          Fechar
+          Confirmar
         </Button>
       </DialogActions>
     </Dialog>

@@ -8,7 +8,7 @@ const Header: React.FC = () => {
     <Box
       sx={{
         backgroundColor: "#001529",
-        padding: "20px 10px", // Ajustar o padding
+        padding: "20px 10px",
         color: "#fff",
       }}
     >
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
           <Typography
             variant="h6"
             component="h1"
-            sx={{ display: "inline", marginLeft: "8px" }}
+            sx={{ display: "inline", marginLeft: "6px" }}
           >
             Voltar
           </Typography>
@@ -37,7 +37,7 @@ const Header: React.FC = () => {
           <Typography
             variant="h6"
             component="h1"
-            sx={{ display: "inline", marginLeft: "8px" }}
+            sx={{ display: "inline", marginRight: "6px" }}
           >
             Sair
           </Typography>

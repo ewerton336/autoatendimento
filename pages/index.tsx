@@ -3,14 +3,8 @@ import dynamic from "next/dynamic";
 import { Box, Grid, Typography, Button } from "@mui/material";
 import GenericModal from "@/components/generics/generic-modal";
 import QuantidadeForm from "@/components/forms/quantidade/quantidade-form";
-
-// Dinamicamente importando Header e Footer com SSR desabilitado
-const Header = dynamic(() => import("@/components/header/header"), {
-  ssr: false,
-});
-const Footer = dynamic(() => import("@/components/footer/footer"), {
-  ssr: false,
-});
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
 
 const Home: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,15 +33,25 @@ const Home: React.FC = () => {
         </Grid>
       </Grid>
 
-      <Button variant="contained" color="primary" onClick={showModal}>
-        Abrir Modal
-      </Button>
-
-      <GenericModal open={isModalOpen} onClose={closeModal}>
+      <Typography align="right">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={showModal}
+          sx={{ textAlign: "right" }}
+        >
+          Digitar quantidade
+        </Button>
+      </Typography>
+      <GenericModal
+        open={isModalOpen}
+        onClose={closeModal}
+        title="Digitar quantidade"
+      >
         <QuantidadeForm />
       </GenericModal>
 
-      <Footer totalAmount={10} />
+      <Footer totalAmount={100} />
     </Box>
   );
 };
