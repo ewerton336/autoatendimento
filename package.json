@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.4",
     "@mui/material": "^6.1.4",
+    "@mui/x-data-grid-pro": "^7.22.0",
     "next": "14.2.15",
     "next-transpile-modules": "^10.0.1",
     "react": "^18",

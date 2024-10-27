@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import { Box, Grid, Typography, Button } from "@mui/material";
 import GenericModal from "@/components/generics/generic-modal";
-import QuantidadeForm from "@/components/forms/quantidade/quantidade-form";
+import QuantidadeForm from "@/components/quantidade/quantidade-form";
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
 
