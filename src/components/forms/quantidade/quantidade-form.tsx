@@ -33,7 +33,7 @@ const QuantidadeForm: React.FC = () => {
           </Button>
           <Button
             variant="contained"
-            onClick={() => setQuantidade(quantidade - 1)}
+            onClick={() => setQuantidade(Math.max(1, quantidade - 1))}
           >
             -
           </Button>

@@ -11,7 +11,7 @@ const Footer: React.FC<FooterProps> = ({ totalAmount }) => {
     <Box
       sx={{
         backgroundColor: "#722ed1",
-        padding: "10px 10px",
+        padding: "0.5% 0%",
         color: "#fff",
         position: "fixed",
         bottom: 0,
@@ -21,20 +21,22 @@ const Footer: React.FC<FooterProps> = ({ totalAmount }) => {
         zIndex: 1000,
       }}
     >
-      <Grid container justifyContent="space-between" alignItems="center">
-        <Grid item xs={11} textAlign="left" alignItems="center">
-          <Typography variant="h6" sx={{ marginLeft: "5px" }}>
-            Valor Total: R${totalAmount}
-          </Typography>
+      <Grid container justifyContent="center" alignItems="center">
+        <Grid item xs={8} textAlign="left">
+          <Grid item xs={8}>
+            <Typography variant="h4" sx={{ padding: "1% 1%" }}>
+              Valor Total: R${totalAmount}
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid item xs={11} textAlign="right" sx={{ marginRight: "50px" }}>
+        <Grid item xs={4} textAlign="right">
           <Button
             variant="contained"
             color="primary"
             startIcon={<ShoppingCartIcon />}
-            sx={{ padding: "30px 20px" }}
+            sx={{ padding: "4% 1%", marginRight: "1%" }}
           >
-            <Typography sx={{ padding: "0px 30px" }} component="span">
+            <Typography sx={{ fontSize: "200%" }} component="span">
               Finalizar
             </Typography>
           </Button>
