@@ -42,7 +42,7 @@ export default function CarrinhoGrid({
         (sum, item) => sum + item.total,
         0
       );
-      onTotalAmountChange(totalAmount); // Atualiza o total no componente pai
+      onTotalAmountChange(totalAmount);
       return updatedItems;
     });
   }
