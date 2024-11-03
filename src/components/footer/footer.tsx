@@ -1,12 +1,12 @@
 import React from "react";
 import { Box, Grid, Button, Typography } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { useCarrinho } from "@/context/carrinho/CarrinhoContext";
 
-interface FooterProps {
-  totalAmount: number;
-}
+interface FooterProps {}
 
-const Footer: React.FC<FooterProps> = ({ totalAmount }) => {
+const Footer: React.FC<FooterProps> = () => {
+  const { calcularTotal } = useCarrinho();
   return (
     <Box
       sx={{
@@ -27,7 +27,7 @@ const Footer: React.FC<FooterProps> = ({ totalAmount }) => {
             <Typography variant="h4" sx={{ padding: "1% 1%" }}>
               Valor Total:
               {" " +
-                totalAmount.toLocaleString("pt-BR", {
+                calcularTotal().toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })}

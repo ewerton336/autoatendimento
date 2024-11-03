@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import { Box, Grid, Button, TextField } from "@mui/material";
 
-const QuantidadeForm: React.FC = () => {
-  const [quantidade, setQuantidade] = useState(1);
+interface QuantidadeFormProps {
+  quantidade: number;
+  setQuantidade: (quantidade: number) => void;
+}
 
+const QuantidadeForm: React.FC<QuantidadeFormProps> = ({
+  quantidade,
+  setQuantidade,
+}) => {
   return (
     <Box>
       <Grid

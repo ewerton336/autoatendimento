@@ -6,10 +6,11 @@ import CarrinhoGrid from "@/components/carrinho/carrinhoGrid";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import InputCodigoBarrasProduto from "@/components/produto/InputCodigoBarrasProduto";
+import { CarrinhoProvider } from "@/context/carrinho/CarrinhoContext";
 
 const Home: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [totalAmount, setTotalAmount] = useState(0);
+  const [quantidadeProduto, setQuantidadeProduto] = useState(1);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -19,36 +20,38 @@ const Home: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const handleTotalAmountChange = (total: number) => {
-    setTotalAmount(total);
-  };
-
   return (
     <Box>
       <Header />
-      <CarrinhoGrid onTotalAmountChange={handleTotalAmountChange} />
+      <CarrinhoProvider>
+        <CarrinhoGrid />
+        <InputCodigoBarrasProduto
+          quantidadePadrao={quantidadeProduto}
+          setQuantidade={setQuantidadeProduto}
+        />
 
-      <InputCodigoBarrasProduto />
-
-      <Typography align="right">
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={showModal}
-          sx={{ textAlign: "right" }}
+        <Typography align="right">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={showModal}
+            sx={{ textAlign: "right" }}
+          >
+            Digitar quantidade
+          </Button>
+        </Typography>
+        <GenericModal
+          open={isModalOpen}
+          onClose={closeModal}
+          title="Digitar quantidade"
         >
-          Digitar quantidade
-        </Button>
-      </Typography>
-      <GenericModal
-        open={isModalOpen}
-        onClose={closeModal}
-        title="Digitar quantidade"
-      >
-        <QuantidadeForm />
-      </GenericModal>
-
-      <Footer totalAmount={totalAmount} />
+          <QuantidadeForm
+            quantidade={quantidadeProduto}
+            setQuantidade={setQuantidadeProduto}
+          />
+        </GenericModal>
+        <Footer />
+      </CarrinhoProvider>
     </Box>
   );
 };

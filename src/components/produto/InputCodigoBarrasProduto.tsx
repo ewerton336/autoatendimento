@@ -1,8 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import { getProdutoByCodigoBarras } from "@/services/api/produto/produto-api";
+import { useCarrinho } from "@/context/carrinho/CarrinhoContext";
 
-const InputCodigoBarrasProduto: React.FC = () => {
+interface InputCodigoBarrasProdutoProps {
+  quantidadePadrao: number;
+  setQuantidade: (quantidade: number) => void;
+}
+
+const InputCodigoBarrasProduto: React.FC<InputCodigoBarrasProdutoProps> = ({
+  quantidadePadrao,
+  setQuantidade,
+}) => {
+  const { adicionarItemAoCarrinho } = useCarrinho();
   const [codigoBarras, setCodigoBarras] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -49,13 +59,9 @@ const InputCodigoBarrasProduto: React.FC = () => {
 
   const handleSubmit = async (codigoBarras: string) => {
     const produto = await getProdutoByCodigoBarras(codigoBarras);
-    console.log(
-      "Código de barras submetido:",
-      codigoBarras,
-      "Produto encontrado:",
-      produto
-    );
+    adicionarItemAoCarrinho(produto, quantidadePadrao);
     setCodigoBarras("");
+    setQuantidade(1);
     ensureFocus();
   };
 

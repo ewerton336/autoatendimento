@@ -8,55 +8,10 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import { getAllProdutos, Produto } from "@/services/api/produto/produto-api";
+import { useCarrinho } from "@/context/carrinho/CarrinhoContext";
 
-interface CarrinhoItem {
-  nome: string;
-  valor: number;
-  quantidade: number;
-  codigoBarras: string;
-  total: number;
-}
-
-interface CarrinhoGridProps {
-  onTotalAmountChange: (total: number) => void;
-}
-
-export default function CarrinhoGrid({
-  onTotalAmountChange,
-}: CarrinhoGridProps) {
-  const [carrinhoItens, setCarrinhoItens] = React.useState<CarrinhoItem[]>([]);
-
-  function AddCarrinhoItem(produto: Produto) {
-    const novoItem: CarrinhoItem = {
-      nome: produto.nome,
-      valor: produto.preco,
-      quantidade: 10,
-      codigoBarras: produto.codigoBarras,
-      total: produto.preco * 10,
-    };
-
-    setCarrinhoItens((prevItens) => {
-      const updatedItems = [...prevItens, novoItem];
-      const totalAmount = updatedItems.reduce(
-        (sum, item) => sum + item.total,
-        0
-      );
-      onTotalAmountChange(totalAmount);
-      return updatedItems;
-    });
-  }
-
-  React.useEffect(() => {
-    const popularCarrinho = async () => {
-      const produtos = await getAllProdutos();
-      produtos.forEach((produto) => {
-        AddCarrinhoItem(produto);
-      });
-    };
-
-    popularCarrinho();
-  }, []);
+export default function CarrinhoGrid({}) {
+  const { carrinhoItens, calcularTotal } = useCarrinho();
 
   return (
     <TableContainer component={Paper}>
@@ -73,7 +28,7 @@ export default function CarrinhoGrid({
         <TableBody>
           {carrinhoItens.map((carrinhoItem) => (
             <TableRow
-              key={carrinhoItem.nome}
+              key={carrinhoItem.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
@@ -81,7 +36,7 @@ export default function CarrinhoGrid({
               </TableCell>
               <TableCell align="center">{carrinhoItem.quantidade}</TableCell>
               <TableCell align="center">
-                {carrinhoItem.valor.toLocaleString("pt-BR", {
+                {carrinhoItem.preco.toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })}
