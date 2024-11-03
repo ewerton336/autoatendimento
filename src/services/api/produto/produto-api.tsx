@@ -47,8 +47,20 @@ export const getProdutoByCodigoBarras = async (
   codigoBarras: string
 ): Promise<Produto> => {
   try {
+    return await MockGetProdutoByCodigoBarras(codigoBarras);
     return await produtoAPI.getBySpecificField(codigoBarras);
   } catch (err) {
     throw new Error("Failed to load product");
   }
+};
+
+export const MockGetProdutoByCodigoBarras = async (
+  codigoBarras: string
+): Promise<Produto> => {
+  return {
+    id: 1,
+    nome: "Produto 1",
+    preco: 10.0,
+    codigoBarras: codigoBarras,
+  };
 };

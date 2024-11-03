@@ -5,6 +5,7 @@ import QuantidadeForm from "@/components/quantidade/QuantidadeForm";
 import CarrinhoGrid from "@/components/carrinho/carrinhoGrid";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
+import InputCodigoBarrasProduto from "@/components/produto/InputCodigoBarrasProduto";
 
 const Home: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,6 +27,8 @@ const Home: React.FC = () => {
     <Box>
       <Header />
       <CarrinhoGrid onTotalAmountChange={handleTotalAmountChange} />
+
+      <InputCodigoBarrasProduto />
 
       <Typography align="right">
         <Button
