@@ -20,7 +20,7 @@ export default function CarrinhoGrid({}) {
           <TableRow>
             <TableCell>Nome</TableCell>
             <TableCell align="center">Quantidade</TableCell>
-            <TableCell align="center">Valor</TableCell>
+            <TableCell align="center">Valor Unitário</TableCell>
             <TableCell align="center">Código de Barras</TableCell>
             <TableCell align="center">Total</TableCell>
           </TableRow>
