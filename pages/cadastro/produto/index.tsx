@@ -1,4 +1,4 @@
-import CadastroProdutoForm from "@/components/produto/cadastro-produto-form";
+import CadastroProdutoForm from "@/components/produto/CadastroProdutoForm";
 import React from "react";
 
 const ProdutoIndex: React.FC = () => {

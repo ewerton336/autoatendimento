@@ -1,25 +1,24 @@
-import { mock } from "node:test";
-import { useGenericCrudAPI } from "../generic/generic-crud-api";
+import { createGenericCrudAPI } from "../generic/generic-crud-api";
 
-interface Produto {
+export interface Produto {
   id: number;
   nome: string;
   preco: number;
   codigoBarras: string;
 }
 
+const produtoAPI = createGenericCrudAPI<Produto>("produto");
+
 export const getAllProdutos = async (): Promise<Produto[]> => {
-  const { getAll } = useGenericCrudAPI<Produto>("produto");
   try {
-    return mockGetAllProdutos();
-    const data = await getAll();
-    return data;
+    return await MockGetAllProdutos();
+    return await produtoAPI.getAll();
   } catch (err) {
     throw new Error("Failed to load products");
   }
 };
 
-export const mockGetAllProdutos = async (): Promise<Produto[]> => {
+export const MockGetAllProdutos = async (): Promise<Produto[]> => {
   return [
     {
       id: 1,
@@ -37,10 +36,8 @@ export const mockGetAllProdutos = async (): Promise<Produto[]> => {
 };
 
 export const getProdutoById = async (id: number): Promise<Produto> => {
-  const { getById } = useGenericCrudAPI<Produto>("produto");
   try {
-    const data = await getById(id);
-    return data;
+    return await produtoAPI.getById(id);
   } catch (err) {
     throw new Error("Failed to load product");
   }
@@ -49,12 +46,8 @@ export const getProdutoById = async (id: number): Promise<Produto> => {
 export const getProdutoByCodigoBarras = async (
   codigoBarras: string
 ): Promise<Produto> => {
-  const { getBySpecificField } = useGenericCrudAPI<Produto>(
-    `produto/${codigoBarras}`
-  );
   try {
-    const data = await getBySpecificField(codigoBarras);
-    return data;
+    return await produtoAPI.getBySpecificField(codigoBarras);
   } catch (err) {
     throw new Error("Failed to load product");
   }
