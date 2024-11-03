@@ -31,9 +31,9 @@ export default function CarrinhoGrid({
     const novoItem: CarrinhoItem = {
       nome: produto.nome,
       valor: produto.preco,
-      quantidade: 1,
+      quantidade: 10,
       codigoBarras: produto.codigoBarras,
-      total: produto.preco * 1,
+      total: produto.preco * 10,
     };
 
     setCarrinhoItens((prevItens) => {
