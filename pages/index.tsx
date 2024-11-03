@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Box, Grid, Typography, Button } from "@mui/material";
-import Header from "@/components/header/header";
-import Footer from "@/components/footer/footer";
 import GenericModal from "@/components/generics/GenericModal";
 import QuantidadeForm from "@/components/quantidade/QuantidadeForm";
 import CarrinhoGrid from "@/components/carrinho/carrinhoGrid";
+import Header from "@/components/header/Header";
+import Footer from "@/components/footer/Footer";
 
 const Home: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [totalAmount, setTotalAmount] = useState(0);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -17,10 +18,14 @@ const Home: React.FC = () => {
     setIsModalOpen(false);
   };
 
+  const handleTotalAmountChange = (total: number) => {
+    setTotalAmount(total);
+  };
+
   return (
     <Box>
       <Header />
-      <CarrinhoGrid />
+      <CarrinhoGrid onTotalAmountChange={handleTotalAmountChange} />
 
       <Typography align="right">
         <Button
@@ -40,7 +45,7 @@ const Home: React.FC = () => {
         <QuantidadeForm />
       </GenericModal>
 
-      <Footer totalAmount={100} />
+      <Footer totalAmount={totalAmount} />
     </Box>
   );
 };

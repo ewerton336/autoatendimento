@@ -1,11 +1,13 @@
 import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
 import { getAllProdutos, Produto } from "@/services/api/produto/produto-api";
 
 interface CarrinhoItem {
@@ -16,7 +18,13 @@ interface CarrinhoItem {
   total: number;
 }
 
-export default function CarrinhoGrid() {
+interface CarrinhoGridProps {
+  onTotalAmountChange: (total: number) => void;
+}
+
+export default function CarrinhoGrid({
+  onTotalAmountChange,
+}: CarrinhoGridProps) {
   const [carrinhoItens, setCarrinhoItens] = React.useState<CarrinhoItem[]>([]);
 
   function AddCarrinhoItem(produto: Produto) {
@@ -28,7 +36,15 @@ export default function CarrinhoGrid() {
       total: produto.preco * 1,
     };
 
-    setCarrinhoItens((prevItens) => [...prevItens, novoItem]);
+    setCarrinhoItens((prevItens) => {
+      const updatedItems = [...prevItens, novoItem];
+      const totalAmount = updatedItems.reduce(
+        (sum, item) => sum + item.total,
+        0
+      );
+      onTotalAmountChange(totalAmount); // Atualiza o total no componente pai
+      return updatedItems;
+    });
   }
 
   React.useEffect(() => {
@@ -51,7 +67,7 @@ export default function CarrinhoGrid() {
             <TableCell align="center">Quantidade</TableCell>
             <TableCell align="center">Valor</TableCell>
             <TableCell align="center">Código de Barras</TableCell>
-            <TableCell align="center">Subtotal</TableCell>
+            <TableCell align="center">Total</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

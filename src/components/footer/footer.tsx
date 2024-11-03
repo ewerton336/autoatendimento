@@ -25,7 +25,12 @@ const Footer: React.FC<FooterProps> = ({ totalAmount }) => {
         <Grid item xs={8} textAlign="left">
           <Grid item xs={8}>
             <Typography variant="h4" sx={{ padding: "1% 1%" }}>
-              Valor Total: R${totalAmount}
+              Valor Total:
+              {" " +
+                totalAmount.toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
             </Typography>
           </Grid>
         </Grid>
