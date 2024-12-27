@@ -8,7 +8,7 @@ export type CrudAPI<T> = {
 };
 
 export const createGenericCrudAPI = <T,>(url: string): CrudAPI<T> => {
-  const baseUrl = "http://localhost:3000/api/";
+  const baseUrl = "https://localhost:7040/api/";
 
   const getAll = async (): Promise<T[]> => {
     const response = await fetch(`${baseUrl + url}`);
@@ -50,7 +50,7 @@ export const createGenericCrudAPI = <T,>(url: string): CrudAPI<T> => {
   };
 
   const getBySpecificField = async (value: any): Promise<T> => {
-    const response = await fetch(`${baseUrl + url}/?${value}`);
+    const response = await fetch(`${baseUrl + url}/${value}`);
     if (!response.ok) throw new Error("Failed to fetch data");
     return await response.json();
   };

@@ -25,7 +25,7 @@ export const CarrinhoProvider: React.FC<{ children: ReactNode }> = ({
     const novoItem: CarrinhoItem = {
       ...produto,
       quantidade,
-      total: produto.preco * quantidade,
+      total: produto.valor * quantidade,
     };
 
     setCarrinhoItens((prevItens) => [...prevItens, novoItem]);
