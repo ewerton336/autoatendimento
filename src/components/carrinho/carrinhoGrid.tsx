@@ -36,14 +36,14 @@ export default function CarrinhoGrid({}) {
               </TableCell>
               <TableCell align="center">{carrinhoItem.quantidade}</TableCell>
               <TableCell align="center">
-                {carrinhoItem.valor.toLocaleString("pt-BR", {
+                {carrinhoItem?.valor?.toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })}
               </TableCell>
               <TableCell align="center">{carrinhoItem.codigoBarras}</TableCell>
               <TableCell align="center">
-                {carrinhoItem.total.toLocaleString("pt-BR", {
+                {carrinhoItem?.total?.toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })}

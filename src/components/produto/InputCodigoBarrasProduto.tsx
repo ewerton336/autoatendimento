@@ -1,16 +1,23 @@
 import React, { useState, useRef, useEffect } from "react";
 import TextField from "@mui/material/TextField";
-import { getProdutoByCodigoBarras } from "@/services/api/produto/produto-api";
+import {
+  getProdutoByCodigoBarras,
+  Produto,
+} from "@/services/api/produto/produto-api";
 import { useCarrinho } from "@/context/carrinho/CarrinhoContext";
 
 interface InputCodigoBarrasProdutoProps {
   quantidadePadrao: number;
   setQuantidade: (quantidade: number) => void;
+  fetchProdutoByCodigoBarras: (
+    codigoBarras: string
+  ) => Promise<Produto | undefined>; // Alterado para Promise
 }
 
 const InputCodigoBarrasProduto: React.FC<InputCodigoBarrasProdutoProps> = ({
   quantidadePadrao,
   setQuantidade,
+  fetchProdutoByCodigoBarras,
 }) => {
   const { adicionarItemAoCarrinho } = useCarrinho();
   const [codigoBarras, setCodigoBarras] = useState("");
@@ -58,8 +65,10 @@ const InputCodigoBarrasProduto: React.FC<InputCodigoBarrasProdutoProps> = ({
   };
 
   const handleSubmit = async (codigoBarras: string) => {
-    const produto = await getProdutoByCodigoBarras(codigoBarras);
-    adicionarItemAoCarrinho(produto, quantidadePadrao);
+    const produto = await fetchProdutoByCodigoBarras(codigoBarras);
+    if (produto) {
+      adicionarItemAoCarrinho(produto, quantidadePadrao);
+    }
     setCodigoBarras("");
     setQuantidade(1);
     ensureFocus();
