@@ -11,7 +11,6 @@ const produtoAPI = createGenericCrudAPI<Produto>("produto");
 
 export const getAllProdutos = async (): Promise<Produto[]> => {
   try {
-    return await MockGetAllProdutos();
     return await produtoAPI.getAll();
   } catch (err) {
     throw new Error("Failed to load products");
