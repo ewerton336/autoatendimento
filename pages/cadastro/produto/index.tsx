@@ -11,6 +11,7 @@ import { Snackbar, Alert, Button, Box } from "@mui/material";
 import ModalForm from "@/components/modal/ModalForm";
 import CadastroProdutoForm from "@/components/produto/CadastroProdutoForm";
 import { showSnackbar } from "@/components/snackbar-notifier/SnackbarNotifier";
+import NavbarAdministrative from "@/components/navbar/administrative/NavbarAdministrative";
 
 const Page: React.FC = () => {
   const [modalFormOpen, setModalFormOpen] = React.useState<boolean>(false);
@@ -70,6 +71,7 @@ const Page: React.FC = () => {
 
   return (
     <>
+      <NavbarAdministrative />
       <Button variant="contained" onClick={() => showCreateForm()}>
         Cadastrar Produto
       </Button>
