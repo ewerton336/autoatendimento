@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import ProdutoGrid from "@/components/produto/ProdutoGrid";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
