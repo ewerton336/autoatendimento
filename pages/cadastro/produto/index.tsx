@@ -11,7 +11,7 @@ import ModalForm from "@/components/modal/ModalForm";
 import CadastroProdutoForm from "@/components/produto/CadastroProdutoForm";
 
 const Page: React.FC = () => {
-  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [modalFormOpen, setModalFormOpen] = React.useState<boolean>(false);
   const [snackbarOpen, setSnackbarOpen] = React.useState<boolean>(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState<string>("");
 
@@ -36,13 +36,13 @@ const Page: React.FC = () => {
     mutationFn: (produto: Produto) => createProduto(produto),
     onSuccess: () => {
       setSnackbarMessage("Produto criado com sucesso!");
-      setSnackbarOpen(true); // Exibe o Snackbar
-      refetchProdutos(); // Recarrega a lista de produtos
-      setModalOpen(false);
+      setSnackbarOpen(true);
+      refetchProdutos();
+      setModalFormOpen(false);
     },
     onError: (error: any) => {
       setSnackbarMessage(error.message || "Erro ao criar produto.");
-      setSnackbarOpen(true); // Exibe o Snackbar
+      setSnackbarOpen(true);
     },
   });
 
@@ -54,11 +54,11 @@ const Page: React.FC = () => {
 
   return (
     <>
-      <Button variant="contained" onClick={() => setModalOpen(true)}>
+      <Button variant="contained" onClick={() => setModalFormOpen(true)}>
         Cadastrar Produto
       </Button>
       <ModalForm
-        open={modalOpen}
+        open={modalFormOpen}
         form={
           <CadastroProdutoForm
             onSubmit={(produto) => {
@@ -66,7 +66,7 @@ const Page: React.FC = () => {
             }}
           />
         }
-        onClose={() => setModalOpen(false)}
+        onClose={() => setModalFormOpen(false)}
         title="Cadastrar Produto"
       />
       <Snackbar
