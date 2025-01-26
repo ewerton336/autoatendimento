@@ -52,13 +52,10 @@ export const getProdutoByCodigoBarras = async (
   }
 };
 
-export const MockGetProdutoByCodigoBarras = async (
-  codigoBarras: string
-): Promise<Produto> => {
-  return {
-    id: 1,
-    nome: "Produto 1",
-    valor: 10.0,
-    codigoBarras: codigoBarras,
-  };
+export const createProduto = async (produto: Produto): Promise<Produto> => {
+  try {
+    return await produtoAPI.post(produto);
+  } catch (err) {
+    throw new Error("Failed to create product");
+  }
 };

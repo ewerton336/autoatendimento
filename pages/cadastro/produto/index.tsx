@@ -1,13 +1,25 @@
 import * as React from "react";
 import ProdutoGrid from "@/components/produto/ProdutoGrid";
-import { useQuery } from "@tanstack/react-query";
-import { getAllProdutos } from "@/services/api/produto/produto-api";
-import { Snackbar, Alert } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  createProduto,
+  getAllProdutos,
+  Produto,
+} from "@/services/api/produto/produto-api";
+import { Snackbar, Alert, Button } from "@mui/material";
+import ModalForm from "@/components/modal/ModalForm";
+import CadastroProdutoForm from "@/components/produto/CadastroProdutoForm";
 
 const Page: React.FC = () => {
-  const [error, setError] = React.useState<string | null>(null);
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [snackbarOpen, setSnackbarOpen] = React.useState<boolean>(false);
+  const [snackbarMessage, setSnackbarMessage] = React.useState<string>("");
 
-  const { data, error: queryError } = useQuery({
+  const {
+    data,
+    error: queryError,
+    refetch: refetchProdutos,
+  } = useQuery({
     queryKey: ["ListProdutos"],
     queryFn: getAllProdutos,
     staleTime: 5 * 60 * 1000, // 5 minutos
@@ -15,37 +27,55 @@ const Page: React.FC = () => {
 
   React.useEffect(() => {
     if (queryError instanceof Error) {
-      const message =
-        queryError.message || "An error occurred while fetching products.";
-      setError(message);
+      setSnackbarMessage(queryError.message);
+      setSnackbarOpen(true);
     }
   }, [queryError]);
 
-  const handleCloseSnackbar = () => {
-    setError(null);
+  const mutation = useMutation({
+    mutationFn: (produto: Produto) => createProduto(produto),
+    onSuccess: () => {
+      setSnackbarMessage("Produto criado com sucesso!");
+      setSnackbarOpen(true); // Exibe o Snackbar
+      refetchProdutos(); // Recarrega a lista de produtos
+      setModalOpen(false);
+    },
+    onError: (error: any) => {
+      setSnackbarMessage(error.message || "Erro ao criar produto.");
+      setSnackbarOpen(true); // Exibe o Snackbar
+    },
+  });
+
+  const handleSubmit = (formData: any) => {
+    mutation.mutate(formData);
   };
 
   const handleEdit = (id: number) => {};
 
   return (
     <>
+      <Button variant="contained" onClick={() => setModalOpen(true)}>
+        Cadastrar Produto
+      </Button>
+      <ModalForm
+        open={modalOpen}
+        form={
+          <CadastroProdutoForm
+            onSubmit={(produto) => {
+              handleSubmit(produto);
+            }}
+          />
+        }
+        onClose={() => setModalOpen(false)}
+        title="Cadastrar Produto"
+      />
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        message={snackbarMessage}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      />
       <ProdutoGrid handleEdit={handleEdit} produtos={data || []} />
-      {error && (
-        <Snackbar
-          open={!!error}
-          autoHideDuration={6000}
-          onClose={handleCloseSnackbar}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        >
-          <Alert
-            onClose={handleCloseSnackbar}
-            severity="error"
-            sx={{ width: "100%" }}
-          >
-            {error}
-          </Alert>
-        </Snackbar>
-      )}
     </>
   );
 };
