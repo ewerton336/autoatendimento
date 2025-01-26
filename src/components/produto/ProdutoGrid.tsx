@@ -14,12 +14,12 @@ const ProdutoGrid: React.FC<ProdutoGridProps> = ({ produtos, handleEdit }) => {
     {
       field: "nome",
       headerName: "Nome do Produto",
-      width: 150,
+      width: 350,
     },
     {
       field: "valor",
       headerName: "Valor",
-      width: 150,
+      width: 100,
     },
     {
       field: "codigoBarras",
@@ -64,7 +64,12 @@ const ProdutoGrid: React.FC<ProdutoGridProps> = ({ produtos, handleEdit }) => {
   ];
 
   return (
-    <Box sx={{ alignItems: "center", height: "75%", width: "50%" }}>
+    <Box
+      sx={{
+        width: "55vw", // Define uma largura para o DataGrid
+        height: "50vh", // Define uma altura para o DataGrid
+      }}
+    >
       <DataGrid
         rows={produtos}
         columns={columns}

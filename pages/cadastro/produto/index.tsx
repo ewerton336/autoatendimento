@@ -7,7 +7,7 @@ import {
   Produto,
   updateProduto,
 } from "@/services/api/produto/produto-api";
-import { Snackbar, Alert, Button } from "@mui/material";
+import { Snackbar, Alert, Button, Box } from "@mui/material";
 import ModalForm from "@/components/modal/ModalForm";
 import CadastroProdutoForm from "@/components/produto/CadastroProdutoForm";
 import { showSnackbar } from "@/components/snackbar-notifier/SnackbarNotifier";
@@ -63,31 +63,37 @@ const Page: React.FC = () => {
     setModalFormOpen(true);
   };
 
+  const showCreateForm = () => {
+    setSelectedProduto(undefined);
+    setModalFormOpen(true);
+  };
+
   return (
     <>
-      <Button variant="contained" onClick={() => setModalFormOpen(true)}>
+      <Button variant="contained" onClick={() => showCreateForm()}>
         Cadastrar Produto
       </Button>
-      <ModalForm
-        open={modalFormOpen}
-        form={
-          <CadastroProdutoForm
-            initialValues={selectedProduto}
-            onSubmit={(produto) => {
-              handleSubmit(produto);
-            }}
-          />
-        }
-        onClose={() => setModalFormOpen(false)}
-        title="Cadastrar Produto"
-      />
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        message={snackbarMessage}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      />
-      <ProdutoGrid handleEdit={handleEdit} produtos={data || []} />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <ModalForm
+          open={modalFormOpen}
+          form={
+            <CadastroProdutoForm
+              initialValues={selectedProduto}
+              onSubmit={(produto) => {
+                handleSubmit(produto);
+              }}
+            />
+          }
+          onClose={() => setModalFormOpen(false)}
+          title="Cadastrar Produto"
+        />
+        <ProdutoGrid handleEdit={handleEdit} produtos={data || []} />
+      </Box>
     </>
   );
 };
