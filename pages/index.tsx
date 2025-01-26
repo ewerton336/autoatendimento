@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Grid, Typography, Button, Modal } from "@mui/material";
+import { Box, Typography, Button, Modal } from "@mui/material";
 import GenericModal from "@/components/generics/GenericModal";
 import QuantidadeForm from "@/components/quantidade/QuantidadeForm";
 import CarrinhoGrid from "@/components/carrinho/carrinhoGrid";
@@ -9,15 +9,13 @@ import InputCodigoBarrasProduto from "@/components/produto/InputCodigoBarrasProd
 import { CarrinhoProvider } from "@/context/carrinho/CarrinhoContext";
 import { useQuery } from "@tanstack/react-query";
 import { getProdutoByCodigoBarras } from "@/services/api/produto/produto-api";
+import { showSnackbar } from "@/components/snackbar-notifier/SnackbarNotifier";
 
 const Home: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [quantidadeProduto, setQuantidadeProduto] = useState(1);
 
   const [codigoBarras, setCodigoBarras] = useState<string>("");
-
-  const [openErrorModal, setOpenErrorModal] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -27,12 +25,7 @@ const Home: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const {
-    data,
-    isLoading,
-    error,
-    refetch: refetchProduto,
-  } = useQuery({
+  const { error, refetch: refetchProduto } = useQuery({
     queryKey: [codigoBarras],
     queryFn: () => getProdutoByCodigoBarras(codigoBarras),
     enabled: false,
@@ -47,8 +40,10 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (error) {
-      setErrorMessage((error as Error).message || "Erro ao buscar o produto.");
-      setOpenErrorModal(true);
+      showSnackbar(
+        `Erro ao buscar produto: ${(error as Error).message}`,
+        "error"
+      );
     }
   }, [error]);
 
@@ -60,7 +55,7 @@ const Home: React.FC = () => {
         <InputCodigoBarrasProduto
           quantidadePadrao={quantidadeProduto}
           setQuantidade={setQuantidadeProduto}
-          fetchProdutoByCodigoBarras={fetchProdutoByCodigoBarras} // Passa a função
+          fetchProdutoByCodigoBarras={fetchProdutoByCodigoBarras}
         />
 
         <Typography align="right">

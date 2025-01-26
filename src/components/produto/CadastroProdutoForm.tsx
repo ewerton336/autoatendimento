@@ -1,22 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, TextField } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-
-interface Produto {
-  codigoBarras: number;
-  nome: string;
-  preco: number;
-}
+import { Produto } from "@/services/api/produto/produto-api";
 
 interface CadastroProdutoFormProps {
   onSubmit: (produto: Produto) => void;
+  initialValues?: Produto;
 }
 
 const CadastroProdutoForm: React.FC<CadastroProdutoFormProps> = ({
   onSubmit,
+  initialValues,
 }) => {
-  const { control, handleSubmit } = useForm<Produto>();
+  const { control, handleSubmit } = useForm<Produto>({
+    defaultValues: initialValues,
+  });
 
   const handleFormSubmit = (data: Produto) => {
     sedPressedSubmit(true);
@@ -31,7 +30,6 @@ const CadastroProdutoForm: React.FC<CadastroProdutoFormProps> = ({
         <Controller
           name="codigoBarras"
           control={control}
-          defaultValue={0}
           rules={{ required: "Código de barras é obrigatório" }}
           render={({ field, fieldState }) => (
             <TextField
@@ -65,7 +63,7 @@ const CadastroProdutoForm: React.FC<CadastroProdutoFormProps> = ({
         />
 
         <Controller
-          name="preco"
+          name="valor"
           control={control}
           defaultValue={0}
           rules={{
@@ -106,7 +104,7 @@ const CadastroProdutoForm: React.FC<CadastroProdutoFormProps> = ({
           disabled={pressedSubmit}
           loading={pressedSubmit}
         >
-          Cadastrar
+          {initialValues?.id ? "Atualizar" : "Cadastrar"}
         </Button>
       </div>
     </form>

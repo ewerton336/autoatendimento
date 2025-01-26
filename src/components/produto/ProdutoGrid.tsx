@@ -5,7 +5,7 @@ import { Produto } from "@/services/api/produto/produto-api";
 
 interface ProdutoGridProps {
   produtos: Produto[];
-  handleEdit: (id: number) => void;
+  handleEdit: (value: Produto) => void;
 }
 
 const ProdutoGrid: React.FC<ProdutoGridProps> = ({ produtos, handleEdit }) => {
@@ -34,7 +34,7 @@ const ProdutoGrid: React.FC<ProdutoGridProps> = ({ produtos, handleEdit }) => {
       renderCell: (params) => (
         <strong>
           <button
-            onClick={() => handleEdit(params.row.id as number)}
+            onClick={() => handleEdit(params.row)}
             style={{
               backgroundColor: "green",
               color: "white",

@@ -5,15 +5,20 @@ import {
   createProduto,
   getAllProdutos,
   Produto,
+  updateProduto,
 } from "@/services/api/produto/produto-api";
 import { Snackbar, Alert, Button } from "@mui/material";
 import ModalForm from "@/components/modal/ModalForm";
 import CadastroProdutoForm from "@/components/produto/CadastroProdutoForm";
+import { showSnackbar } from "@/components/snackbar-notifier/SnackbarNotifier";
 
 const Page: React.FC = () => {
   const [modalFormOpen, setModalFormOpen] = React.useState<boolean>(false);
   const [snackbarOpen, setSnackbarOpen] = React.useState<boolean>(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState<string>("");
+  const [selectedProduto, setSelectedProduto] = React.useState<
+    Produto | undefined
+  >(undefined);
 
   const {
     data,
@@ -27,22 +32,25 @@ const Page: React.FC = () => {
 
   React.useEffect(() => {
     if (queryError instanceof Error) {
-      setSnackbarMessage(queryError.message);
-      setSnackbarOpen(true);
+      showSnackbar(queryError.message, "error");
     }
   }, [queryError]);
 
   const mutation = useMutation({
-    mutationFn: (produto: Produto) => createProduto(produto),
-    onSuccess: () => {
-      setSnackbarMessage("Produto criado com sucesso!");
-      setSnackbarOpen(true);
+    mutationFn: (produto: Produto) => {
+      const isUpdate = produto.id !== undefined;
+      return isUpdate
+        ? updateProduto(produto.id!, produto)
+        : createProduto(produto);
+    },
+    onSuccess: (data, variables) => {
+      const action = variables.id ? "atualizado" : "criado";
+      showSnackbar(`Produto ${action} com sucesso.`, "success");
       refetchProdutos();
       setModalFormOpen(false);
     },
     onError: (error: any) => {
-      setSnackbarMessage(error.message || "Erro ao criar produto.");
-      setSnackbarOpen(true);
+      showSnackbar(error.message, "error");
     },
   });
 
@@ -50,7 +58,10 @@ const Page: React.FC = () => {
     mutation.mutate(formData);
   };
 
-  const handleEdit = (id: number) => {};
+  const handleEdit = (value: Produto) => {
+    setSelectedProduto(value);
+    setModalFormOpen(true);
+  };
 
   return (
     <>
@@ -61,6 +72,7 @@ const Page: React.FC = () => {
         open={modalFormOpen}
         form={
           <CadastroProdutoForm
+            initialValues={selectedProduto}
             onSubmit={(produto) => {
               handleSubmit(produto);
             }}
