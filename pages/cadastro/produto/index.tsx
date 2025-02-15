@@ -7,7 +7,7 @@ import {
   Produto,
   updateProduto,
 } from "@/services/api/produto/produto-api";
-import { Snackbar, Alert, Button, Box } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import ModalForm from "@/components/modal/ModalForm";
 import CadastroProdutoForm from "@/components/produto/CadastroProdutoForm";
 import { showSnackbar } from "@/components/snackbar-notifier/SnackbarNotifier";
@@ -15,8 +15,6 @@ import NavbarAdministrative from "@/components/navbar/administrative/NavbarAdmin
 
 const Page: React.FC = () => {
   const [modalFormOpen, setModalFormOpen] = React.useState<boolean>(false);
-  const [snackbarOpen, setSnackbarOpen] = React.useState<boolean>(false);
-  const [snackbarMessage, setSnackbarMessage] = React.useState<string>("");
   const [selectedProduto, setSelectedProduto] = React.useState<
     Produto | undefined
   >(undefined);
