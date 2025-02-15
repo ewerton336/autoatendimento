@@ -8,7 +8,7 @@ export type CrudAPI<T> = {
 };
 
 export const createGenericCrudAPI = <T,>(url: string): CrudAPI<T> => {
-  const baseUrl = "http://localhost:7040/api/";
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const getAll = async (): Promise<T[]> => {
     const response = await fetch(`${baseUrl + url}`);
